@@ -40,6 +40,7 @@ display: inline-block;
   line-height: 24px;
   color: #ff469e;
   height: 380px;
+
 }
 .site-footer hr {
   border-top-color: #bbb;
@@ -153,7 +154,7 @@ display: inline-block;
   width: 34px;
   font-size: 14px;
 }
-.social-icons a.facebook:hover {
+.social-icons acebook:hover {
   background-color: #3b5998;
 }
 .social-icons a.twitter:hover {
@@ -206,6 +207,12 @@ display: inline-block;
     #email{
       width: 500px;
       height: 38px;
+      margin-top: 20px;
+      border: 1px solid #ffc0cb8c;
+    }
+    #Username{
+      width: 500px;
+      height: 38px;
       border: 1px solid #ffc0cb8c;
     }
     #pass{
@@ -227,6 +234,12 @@ display: inline-block;
       width: 48%;
     }
     #email2{
+      width: 500px;
+      height: 38px;
+      margin-top: 20px;
+      border: 1px solid #ffc0cb8c;
+    }
+    #Name2{
       width: 500px;
       height: 38px;
       border: 1px solid #ffc0cb8c;
@@ -382,7 +395,7 @@ display: inline-block;
 .cart.open {
   right: 0; /* Khi được mở, hiển thị thanh sidebar */
   background-color:#ffc0cb8c;
-  width: 280px;
+  width: 20%;
 }
 
 

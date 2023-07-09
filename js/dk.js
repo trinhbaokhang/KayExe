@@ -20,12 +20,13 @@ const form = document.getElementById("form")
 form.addEventListener("submit", function(e) {
   e.preventDefault()
 
+  const name = document.getElementById("Username").value;
   const email = document.getElementById("email").value;
   const pass = document.getElementById("pass").value;
   
-  createUserWithEmailAndPassword(auth, email, pass)
+  createUserWithEmailAndPassword(auth,name, email, pass)
   .then((userCredential) => {
-    // Signed in 
+    
     const user = userCredential.user;
     window.location.href="dn.html"
   })

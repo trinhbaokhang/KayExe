@@ -22,15 +22,16 @@ const form = document.getElementById("form")
 
 form.addEventListener("submit", async function(e) {
   e.preventDefault()
-
+  
+  const name2  = document.getElementById("Name2").value
   const email2 = document.getElementById("email2").value
   const pass2 = document.getElementById("pass2").value
   
-  signInWithEmailAndPassword(auth, email2, pass2)
+  signInWithEmailAndPassword(auth,name2, email2, pass2)
   .then((userCredential) => {
     window.localStorage.setItem('checklogin', '1')
     window.location.href="index.html"
-    window.localStorage.setItem('name', email2)
+    window.localStorage.setItem('name', name2)
   })
   .catch((error) => {
     const errorCode = error.code;

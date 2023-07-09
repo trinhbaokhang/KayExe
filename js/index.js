@@ -1,36 +1,4 @@
-// async function getFood(url) {
-//     const res = await fetch(url);
-//     const food = await res.json();
-//     return food;
-//   }
-//   function renderUi1(foods) {
-//     const content = document.getElementById("food-lists-1");
-//     foods.map(async (food) => {
-//     const item_div = document.createElement("div");
-//     item_div.setAttribute("class", "wrapper");
-//     item_div.innerHTML =
-//      `<div class="header">
-//       <img src="${food.strMealThumb}" alt=""/> 
-//       </div>
-//       <h1 class="name">${food.strMeal}</h1>
-//       <div class="border"></div>
-//       <div class="grey-border"></div>
-//       <a href="detail.html?id=${food.idMeal}" class="button">Read More</a>`;
-//     content.appendChild(item_div);
-//     });
-//   }
-//   async function run() {
-//     const foods1 = await getFood(
-//      `https://www.themealdb.com/api/json/v1/1/filter.php?a=French`  
-//     );
-//     var top1 = foods1.meals
-//     .sort(function (a,b) {
-//         return a.a < b.a ? 1 : -1;
-//     })
-//     .slice(0, 50)
-//     renderUi1(top1);
-//   }
-//   run();
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
@@ -205,14 +173,26 @@ function displayCart(){
 
 var checklogin = window.localStorage.getItem('checklogin');
 
+
 if(checklogin == '1'){
     var name = window.localStorage.getItem('name');
     var dkdn1 = document.querySelector('.dk-dn1')
     var dkdn2 = document.querySelector('.dk-dn2')
+    const dangxuat3 = document.querySelector('.ph');
     var dangxuat = document.createElement('a')
     dangxuat.innerHTML = "  Đăng xuất"
-
+    dangxuat.classList.add("dangxuat-item");
+    dangxuat3.appendChild(dangxuat);
     dkdn1.innerHTML = name
     dkdn2.innerHTML = ""
     console.log(name)
 }
+
+const dangxuat2 =  document.querySelector('.dangxuat-item')
+ dangxuat2.addEventListener('click,', () => {
+  window.localStorage.setItem('checklogin', '0')
+  window.location.href="index.html"
+ 
+})
+  
+console.log(dangxuat2)
