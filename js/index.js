@@ -1,6 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { addDoc  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyCBwJftKjEhUxB6KPyOTdvfEaHzBMhV0Rk",
@@ -76,8 +77,6 @@ getProducts();
 
 
 
-
-
 let openShopping = document.querySelector('#shopping-img');
 let  closeShopping = document.querySelector('.closeShopping');
 let body = document.querySelector('body');
@@ -137,6 +136,18 @@ const observer = new MutationObserver(mutationsList => {
 
 
 
+
+
+
+
+// Lấy nút "Đặt hàng" dựa trên lớp (class) "place-order"
+const placeOrderButton = document.querySelector('#cart-total');
+
+// Thêm sự kiện click cho nút "Đặt hàng"
+placeOrderButton.addEventListener('click', () => {
+  placeOrder();
+});
+
 // Bắt đầu theo dõi thay đổi trong DOM
 observer.observe(document.body, { childList: true, subtree: true });
 let cart=[];
@@ -155,6 +166,7 @@ function addToCart(productName, price) {
   // Cập nhật giỏ hàng trên giao diện
   displayCart();
 }
+
 function displayCart(){
   const cartItemsElement = document.getElementById('cart-items');
 
@@ -171,6 +183,26 @@ function displayCart(){
 }
 
 
+function placeOrder() {
+  // Lưu thông tin đơn hàng vào Firestore
+  addDoc(collection(db, "orders"), {
+    orderItems: cart,
+    timestamp: Timestamp.now()
+  })
+    .then(function (docRef) {
+      // Xóa giỏ hàng sau khi đặt hàng
+      cart = [];
+
+      // Cập nhật giỏ hàng trên giao diện
+      displayCart();
+
+
+    })
+    .catch(function (error) {
+      console.error("Lỗi khi lưu đơn hàng vào Firestore: ", error);
+    });
+}
+   
 var checklogin = window.localStorage.getItem('checklogin');
 
 

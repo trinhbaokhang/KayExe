@@ -50,14 +50,16 @@ Form.addEventListener('submit', async (e) => {
     
   const email = document.getElementById('email2').value
   const password = document.getElementById('pass2').value
+  const docRef = doc(db, "Test", email);
+  const docSnap = await getDoc(docRef);
 
-  try {
-
-    const docRef = doc(db, "Test", email);
-    const docSnap = await getDoc(docRef);
-    console.log(docSnap)
-  } catch (error) {
+  if(docSnap.data().pass == password ){
+    window.localStorage.setItem('checklogin', '1')
+    window.localStorage.setItem('name', docSnap.data().name)
+    window.location.href ="index.html"
+   
+  } else  {
     // Nếu có lỗi, in ra console
-    console.error(error)
+   alert('Sai r đăng nhập lại đê')
   }
 })
