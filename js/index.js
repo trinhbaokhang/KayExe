@@ -189,7 +189,7 @@ if(checklogin == '1'){
 }
 
 const dangxuat2 =  document.querySelector('.dangxuat-item')
- dangxuat2.addEventListener('click,', () => {
+ dangxuat2.addEventListener('click', () => {
   window.localStorage.setItem('checklogin', '0')
   window.location.href="index.html"
  
