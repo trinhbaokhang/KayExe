@@ -1,8 +1,8 @@
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import {getFirestore ,getDocFromCache,collection, doc, setDoc  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"; 
+import { getAuth }from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import {getFirestore ,collection, doc, getDoc  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyCBwJftKjEhUxB6KPyOTdvfEaHzBMhV0Rk",
@@ -48,22 +48,16 @@ Form.addEventListener('submit', async (e) => {
 
   // Lấy giá trị từ các trường email và password
     
-  const name = document.getElementById('Name2').value
   const email = document.getElementById('email2').value
   const password = document.getElementById('pass2').value
 
   try {
-    // Thử đăng nhập người dùng với email và mật khẩu
-    await setDoc(auth,name, email, password)
-    // Nếu thành công, chuyển hướng đến trang quản trị (admin.html)
-    window.localStorage.setItem('checklogin', '1')
-    window.location.href="index.html"
-    window.localStorage.setItem('name', name)
+
+    const docRef = doc(db, "Test", email);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap)
   } catch (error) {
     // Nếu có lỗi, in ra console
     console.error(error)
   }
 })
-const docRef = doc(db, "Test");
-const docSnap = await getDoc(docRef);
-console.log(docSnap)
