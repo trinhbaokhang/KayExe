@@ -1,7 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
-import { addDoc  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"; 
+import { getFirestore, collection, addDoc, Timestamp   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyCBwJftKjEhUxB6KPyOTdvfEaHzBMhV0Rk",
@@ -15,7 +15,8 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
 const database = getDatabase();
 const databaseRef = dbRef(database, "products");
 const productList = document.getElementById("productList");
@@ -51,10 +52,11 @@ function createProductItem(productData) {
     nameElement.textContent = name;
     productItem.appendChild(nameElement);
 
-    // const idElement = document.createElement("p");
-    // idElement.textContent = "ID: " + id;
-    // productItem.appendChild(idElement);
-
+    const idElement = document.createElement("p");
+    idElement.textContent = id;
+    idElement.classList.add('item-id')
+    productItem.appendChild(idElement)
+   
     const priceElement = document.createElement("h4");
     productItem.classList.add("p-item");
     priceElement.textContent = "Giá: " + price + "đ";
@@ -95,7 +97,7 @@ closeShopping.addEventListener('click', ()=>{
 // Hàm chạy khi các phần tử đã được tạo hoàn tất
 function onElementsCreated() {
   const buyButtons = document.querySelectorAll('.buy-item');
-  console.log(buyButtons);
+
 
   // Lặp qua từng nút và thêm sự kiện click
   buyButtons.forEach(button => {
@@ -103,15 +105,15 @@ function onElementsCreated() {
       // Lấy thông tin sản phẩm từ các phần tử con của nút
       const productItem = button.querySelector('h2').textContent;
       const priceText = button.querySelector('h4').textContent;
+      const id = button.querySelector('p').textContent;
+      
       const price = parseInt(priceText.replace(/[^0-9]/g, ''));
       
 
       // Thực hiện các hành động khác với thông tin sản phẩm
-      console.log('Sản phẩm:', productItem);
-      console.log('Giá:', price);
 
       // Gọi hàm addToCart với thông tin sản phẩm
-      addToCart(productItem, price);
+      addToCart(productItem, price, id);
     });
   });
 }
@@ -151,35 +153,52 @@ placeOrderButton.addEventListener('click', () => {
 // Bắt đầu theo dõi thay đổi trong DOM
 observer.observe(document.body, { childList: true, subtree: true });
 let cart=[];
-function addToCart(productName, price) {
+function addToCart(productName, price,id) {
   // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-  const existingProduct = cart.find(item => item.name === productName);
+  const existingProduct = cart.find(item => item.id === id);
 
   if (existingProduct) {
     // Nếu đã tồn tại, tăng số lượng
     existingProduct.quantity += 1;
   } else {
     // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
-    cart.push({ name: productName, price: price, quantity: 1 });
+    cart.push({ name: productName, price: price, id : id , quantity: 1 });
   }
 
   // Cập nhật giỏ hàng trên giao diện
   displayCart();
 }
+const removebut  = new MutationObserver(mutationsList => {
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      // Kiểm tra nếu các phần tử có class "buy-item" đã được tạo hoàn tất
+      const buyItems = document.querySelectorAll('.cl-id');
+      if (buyItems.length > 0) {
+        // Hủy bỏ việc theo dõi
 
-function displayCart(){
-  const cartItemsElement = document.getElementById('cart-items');
 
-  const cartTotalElement = document.getElementById('cart-total');
-  cartItemsElement.innerHTML=``;
-  cart.forEach(item => {
-    const cartItemElement = document.createElement('div');
-    cartItemElement.classList.add('cart-item');
-    cartItemElement.innerHTML = `<span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span>`;
-    cartItemsElement.appendChild(cartItemElement);
-  });
-  const total = cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0);
-  cartTotalElement.innerHTML = `<h3>Tổng : $${total}</h3>`;
+        // Gọi hàm khi các phần tử đã được tạo hoàn tất
+        removebutton();
+        break;
+      }
+    }
+  }
+});
+removebut.observe(document.body, { childList: true, subtree: true })
+function removebutton() {
+  const removeButtons = document.querySelectorAll('.cl-id')
+
+  // Lặp qua từng nút và thêm sự kiện click
+  removeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      // Lấy thông tin sản phẩm từ các phần tử con của n
+      const index = button.getAttribute('cart-item')
+      // cart.splice(index, 1)
+      console.log(button)
+      displayCart()
+      removebutton()
+    })
+  })
 }
 
 
@@ -201,9 +220,26 @@ function placeOrder() {
     .catch(function (error) {
       console.error("Lỗi khi lưu đơn hàng vào Firestore: ", error);
     });
-}
+}  
    
 var checklogin = window.localStorage.getItem('checklogin');
+
+
+function displayCart(){
+  const cartItemsElement = document.getElementById('cart-items');
+  const cartTotalElement = document.getElementById('cart-total');
+  cartItemsElement.innerHTML=``;
+  cart.forEach(item => {
+    const cartItemElement = document.createElement('div');
+    cartItemElement.classList.add('cart-item');
+    cartItemElement.innerHTML = `<span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span>  <button class = " cl-id"> Xóa</button>`;
+    cartItemsElement.appendChild(cartItemElement);
+  });
+  const total = cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0);
+  cartTotalElement.innerHTML = `<h3>Tổng : $${total}</h3>`;
+}
+
+
 
 
 if(checklogin == '1'){
@@ -217,7 +253,6 @@ if(checklogin == '1'){
     dangxuat3.appendChild(dangxuat);
     dkdn1.innerHTML = name
     dkdn2.innerHTML = ""
-    console.log(name)
 }
 
 const dangxuat2 =  document.querySelector('.dangxuat-item')
@@ -227,4 +262,3 @@ const dangxuat2 =  document.querySelector('.dangxuat-item')
  
 })
   
-console.log(dangxuat2)
