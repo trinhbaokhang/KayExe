@@ -1,3 +1,24 @@
+@media only screen and (max-width: 600px) {
+  .example {background: red;}
+}
+
+@media only screen and (min-width: 600px) {
+  .example {background: green;}
+}
+
+@media only screen and (min-width: 768px) {
+  .example {background: blue;}
+} 
+
+@media only screen and (min-width: 992px) {
+  .example {background: orange;}
+} 
+
+
+@media only screen and (min-width: 1200px) {
+  .example {background: pink;}
+}
+
 .page-width{
     width:  1280px;
     margin: 0 auto;
@@ -395,7 +416,7 @@ display: inline-block;
 .cart.open {
   right: 0; /* Khi được mở, hiển thị thanh sidebar */
   background-color:#ffc0cb8c;
-  width: 25%;
+  width: 30%;
 }
 
 
@@ -415,4 +436,12 @@ display: inline-block;
 
 .item-id{
   display: none;
+}
+
+
+.cl-id{
+  background-color: #ff469e;
+}
+.tru1{
+  background-color: #ff469e;
 }

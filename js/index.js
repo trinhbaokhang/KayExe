@@ -103,6 +103,7 @@ function onElementsCreated() {
   buyButtons.forEach(button => {
     button.addEventListener('click', () => {
       // Lấy thông tin sản phẩm từ các phần tử con của nút
+      const img = button.querySelector('img').getAttribute('src')
       const productItem = button.querySelector('h2').textContent;
       const priceText = button.querySelector('h4').textContent;
       const id = button.querySelector('p').textContent;
@@ -113,7 +114,7 @@ function onElementsCreated() {
       // Thực hiện các hành động khác với thông tin sản phẩm
 
       // Gọi hàm addToCart với thông tin sản phẩm
-      addToCart(productItem, price, id);
+      addToCart(productItem, price, id, img);
     });
   });
 }
@@ -147,13 +148,14 @@ const placeOrderButton = document.querySelector('#cart-total');
 
 // Thêm sự kiện click cho nút "Đặt hàng"
 placeOrderButton.addEventListener('click', () => {
-  placeOrder();
+  window.location.href = `ttsp.html?cart=${encodeURIComponent(JSON.stringify(cart))}`;
+
 });
 
 // Bắt đầu theo dõi thay đổi trong DOM
 observer.observe(document.body, { childList: true, subtree: true });
 let cart=[];
-function addToCart(productName, price,id) {
+function addToCart(productName, price,id,img) {
   // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
   const existingProduct = cart.find(item => item.id === id);
 
@@ -162,7 +164,7 @@ function addToCart(productName, price,id) {
     existingProduct.quantity += 1;
   } else {
     // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
-    cart.push({ name: productName, price: price, id : id , quantity: 1 });
+    cart.push({ name: productName, price: price, id : id , img : img , quantity: 1 });
   }
 
   // Cập nhật giỏ hàng trên giao diện
@@ -214,7 +216,7 @@ function placeOrder() {
 
       // Cập nhật giỏ hàng trên giao diện
       displayCart();
-
+      
 
     })
     .catch(function (error) {
@@ -232,9 +234,11 @@ function displayCart(){
   cart.forEach(item => {
     const cartItemElement = document.createElement('div');
     cartItemElement.classList.add('cart-item');
-    cartItemElement.innerHTML = `<span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span>  <button class = " cl-id"> Xóa</button>`;
+    cartItemElement.innerHTML = `  <img width ="20%" src = "${item.img}">    <span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span>  <button class = "tru1" id = "${item.id}"> -1 </button>  <button id = "${item.id}" class = " cl-id"> Xóa</button>`;
     cartItemsElement.appendChild(cartItemElement);
+  
   });
+  onbutton2()
   const total = cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0);
   cartTotalElement.innerHTML = `<h3>Tổng : $${total}</h3>`;
 }
@@ -262,3 +266,39 @@ const dangxuat2 =  document.querySelector('.dangxuat-item')
  
 })
   
+
+
+function onbutton2(){
+  const tru = document.querySelectorAll(".tru1")
+  const clid = document.querySelectorAll(".cl-id")
+  clid.forEach(button => {
+    button.addEventListener('click', () => {
+        clear(button.getAttribute("id"))
+    })
+  })
+
+  tru.forEach(button2 => {
+    button2.addEventListener('click', () => {
+       truitem(button2.getAttribute("id"))
+    })
+  })
+}
+
+function clear(id){
+  var kt2 = cart.find((item) => item.id === id)
+  if( kt2 ){
+    cart = cart.filter((item) => item.id  !== id)
+  }
+  displayCart()
+}
+
+function truitem(id){
+  var kt3 = cart.find((item) => item.id === id)
+  if( kt3 ){
+   kt3.quantity -= 1;
+   if(kt3.quantity === 0){
+    cart = cart.filter((item) => item.id  !== id)
+   }
+  }
+  displayCart()
+}
