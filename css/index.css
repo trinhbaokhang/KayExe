@@ -445,3 +445,26 @@ display: inline-block;
 .tru1{
   background-color: #ff469e;
 }
+
+.baoquanh{
+ margin-top: 20px;
+ margin-bottom: 20px;
+ color: #ff469e;
+ border: 1px solid black;
+ padding: 20px;
+    width: 1280px;
+    margin: 0 auto;
+     margin-top: 20px; 
+}
+.img-item2 {
+width: 20%;
+margin-top: 20px;
+
+}
+.li{
+  font-size: 19px;
+  list-style: none;
+}
+.styh3{
+  margin-top: 0;
+}

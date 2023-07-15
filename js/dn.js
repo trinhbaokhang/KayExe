@@ -52,13 +52,14 @@ Form.addEventListener('submit', async (e) => {
   const password = document.getElementById('pass2').value
   const docRef = doc(db, "Test", email);
   const docSnap = await getDoc(docRef);
-
-  if(docSnap.data().pass == password ){
+if(email == "admin@gmail.com" && password == "admin1234"){
+    window.location.href = "admin.html"
+}else if(docSnap.data().pass == password ){
     window.localStorage.setItem('checklogin', '1')
     window.localStorage.setItem('name', docSnap.data().name)
     window.location.href ="index.html"
    
-  } else  {
+  }else  {
     // Nếu có lỗi, in ra console
    alert('Sai r đăng nhập lại đê')
   }

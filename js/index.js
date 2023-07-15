@@ -147,8 +147,11 @@ const observer = new MutationObserver(mutationsList => {
 const placeOrderButton = document.querySelector('#cart-total');
 
 // Thêm sự kiện click cho nút "Đặt hàng"
-placeOrderButton.addEventListener('click', () => {
-  window.location.href = `ttsp.html?cart=${encodeURIComponent(JSON.stringify(cart))}`;
+placeOrderButton.addEventListener('click' , async function(e) {
+  e.preventDefault()
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
+  placeOrder()
 
 });
 
@@ -211,11 +214,7 @@ function placeOrder() {
     timestamp: Timestamp.now()
   })
     .then(function (docRef) {
-      // Xóa giỏ hàng sau khi đặt hàng
-      cart = [];
-
-      // Cập nhật giỏ hàng trên giao diện
-      displayCart();
+  window.location.href = 'ttsp.html';
       
 
     })
@@ -257,6 +256,7 @@ if(checklogin == '1'){
     dangxuat3.appendChild(dangxuat);
     dkdn1.innerHTML = name
     dkdn2.innerHTML = ""
+    console.log(name)
 }
 
 const dangxuat2 =  document.querySelector('.dangxuat-item')

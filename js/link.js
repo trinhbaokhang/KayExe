@@ -1,18 +1,18 @@
-// Lấy dữ liệu từ query parameters
-const urlParams = new URLSearchParams(window.location.search);
-const cartData = urlParams.get('cart');
 
-// Chuyển đổi dữ liệu thành đối tượng giỏ hàng
-const cart = JSON.parse(decodeURIComponent(cartData));
+
+const cart=  JSON.parse(localStorage.getItem('cart'));
+console.log(cart)
+// Xóa dữ liệu từ localStorage sau khi sử dụng (nếu cần)
+localStorage.removeItem('cart'); 
 
 function displayCart2(){
-    const cartItemsElement = document.querySelector('.cart-items');
+    const cartItemsElement = document.querySelector('.cart-items2');
 
     cart.forEach(item => {
         console.log("hello")
       const cartItemElement = document.createElement('div');
-      cartItemElement.classList.add('cart-item');
-      cartItemElement.innerHTML = `  <img src = "${item.img}"> <span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span> `;
+      cartItemElement.classList.add('cart-item2');
+      cartItemElement.innerHTML = ` <div class = "form-img-item"><img class="img-item2" src = "${item.img}"> <span>${item.name} - Giá: $${item.price} - Số lượng: ${item.quantity}</span></div>   `;
       cartItemsElement.appendChild(cartItemElement);
     });
    

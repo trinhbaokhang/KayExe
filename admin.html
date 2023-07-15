@@ -1,10 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
+
+  
+
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
+    <title>Admin Page</title>
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -13,40 +15,86 @@
     rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
   />
-</head>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .product-item{
+            width: 20%;
+        }
+        .product-item img{
+           width: 100%;
+        }
+    </style>
+  </head>
+
 <body>
-  <div class="thanh-dai">
-    <div class="page-width">
-     
-      <div class="Tr"> 
-        <h2 style="margin: 0;color: #ff469e ; display: inline-block;">KAY.EXE</h1>
-          <a href="index.html">Trang chủ</a>
-          <a href="gt.html">Giới thiệu</a>
-          <a href="">Giỏ hàng</a>
+    <div class="wrapper">
+        <div  class="thanh-dai">
+            <div class="page-width">
+              
+                <div class="Tr">
+                  <h2 style="margin: 0;color: #ff469e ; display: inline-block;">KAY.EXE</h1>
+                    <a href="index.html">Trang chủ</a>
+                    <a href="gt.html">Giới thiệu</a>
+                    <a href="">Giỏ hàng</a>
+                  
+                </div>
+                <div class="ph">  <a href="dk.html">Đăng ký<a href="dn.html" style="padding: 0; ">/Đăng nhập</a></a></div>
+            </div>
+        </div>
+      <div id="checkdonhang"> 
+        <h1 class="ad">Admin Page</h1>
+        <button><a href="donhang.html"  class="check">Check Đơn Hàng</a></button>
+      </div>
+       
+        <!-- Form upload sản phẩm -->
+        <form style="width: 100%;" id="productForm">
+          <h2>Upload Product</h2>
+      
+          <label for="productName">Product Name:</label>
+          <input type="text" id="productName" required>
+      
+          <label for="productId">Product ID:</label>
+          <input type="text" id="productId" required>
+      
+          <label for="productPrice">Product Price:</label>
+          <input type="number" id="productPrice" required>
+      
+          <label for="productImage">Product Image:</label>
+          <input type="file" id="productImage" required>
+      
+          <button type="submit">Upload</button>
+        </form>
+      
+        <!-- Danh sách sản phẩm -->
+        <div>
+          <h2>Product List</h2>
+          <ul id="productList" class="product-list"></ul>
         
-      </div>
-      <div class="ph">   <a class="dk-dn1" href="dk.html">Đăng ký<a class="dk-dn2" href="dn.html" style="padding: 0; ">/Đăng nhập</a></a>       
-        <a href="" id="dangxuat"></a> 
-      </div>
-
-  </div>
-  </div>
-
+          <!-- Form chỉnh sửa sản phẩm -->
+          <form style="width: 100%;" id="editProductForm" class="edit-product-form">
+            <h2>Edit Product</h2>
+        
+            <label for="editProductName">Product Name:</label>
+            <input type="text" id="editProductName" required>
+        
+            <label for="editProductId">Product ID:</label>
+            <input type="text" id="editProductId" required>
+        
+            <label for="editProductPrice">Product Price:</label>
+            <input type="number" id="editProductPrice" required>
+        
+            <label for="editProductImage">Product Image:</label>
+            <input type="file" id="editProductImage" accept="image/*">
+        
+            <button type="submit" id="editProductSubmit">Update</button>
+            <button type="button" class="cancel" id="editProductCancel">Cancel</button>
+          </form>
+        </div>
+       
     </div>
+ 
 
-    <div class="page-width">
-       <h1 style=" color:#ff469e;">GIỚI THIỆU</h1>
-
-       <h3 style=" color:#ff469e;">KAY.EXE đang là cái tên uy tín được nhiều cha mẹ ở Tuyên Quang yêu thích và đánh giá cao bởi chất lượng mẫu mã đúng mốt cùng giá tiền hợp lý. Ngoài những set đồ cho bé mặc nhà phù hợp với đặc trưng thời tiết thì shop còn gây chú ý bởi những thiết kế quần áo trẻ trung khá ấn tượng. Điểm ấn tượng đầu tiên khi quý khách mua sắm tại Honey Store đó chính là nhân viên tư vấn cực kì nhiệt tình, chu đáo bất kể bạn sử dụng dịch vụ mua sắm online hay mua hàng trực tiếp tại shop. Honey Store luôn luôn mong muốn mang đến dịch vụ tốt nhất cho các bố mẹ và sản phẩm tốt nhất cho các con.
-       </h3>
-       <h3 style=" color:#ff469e;">KAY.EXE chuyên cung cấp đồ cho bé khoảng từ 1 đến 12 tuổi, Từ khi mở cửa đến nay shop đã tạo được rất nhiều uy tín trong lòng khách hàng. Mẫu mã ở shop rất đa dạng, cả đồ cho bé gái và bé trai, có đủ size có các độ tuổi khách nhau nhé. Honey Store là một shop thời trang trẻ em với những sản phẩm mang phong cách đơn giản, thoải mái, rất phù hợp với mặc ở nhà hoặc đi chơi. Mẫu mã ở đây cũng rất đa dạng, từ các loại áo, quần rời, đến các set đồ, từ đồ dài tay đến đồ cộc, vậy nên đây là địa điểm thu hút được nhiều cha mẹ đến mua đồ cho con của mình.
-
-
-
-        Ngoài quần áo thì các phụ kiện thời trang trẻ em tại shop cũng rất đa dạng cho các bạn lựa chọn. Các sản phẩm như mũ, tất cũng được rất nhiều bà mẹ yêu thích bởi giá cả phải chăng, tiện dụng và mẫu mã đẹp. Đến với Honey Store bạn sẽ không cần lo bị ép giá, vì giá sản phẩm đều được chủ shop niêm yết và đăng trên fanpage của shop rồi. Vậy còn lo lắng gì nữa mà không tới Honey Store sắm đồ cho bé yêu nhà bạn ngay thôi nào.</h3>
-    </div>
-
-    <footer class="site-footer">
+    <footer class="site-footer"  style="margin-top: 255px;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -129,10 +177,11 @@
                 </li>
               </ul>
             </div>
-
+            
           </div>
         </div>
       </footer> 
-    <script type="module" src="js/index.js"></script>
+
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>
